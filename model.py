@@ -9,7 +9,7 @@ from collections import deque
 import sys
 
 
-class CNN_RNN():
+class Model():
     def __init__(self, nb_classes, model, seq_length,
                  saved_model=None, features_length=2048):
 
