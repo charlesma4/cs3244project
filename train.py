@@ -36,11 +36,11 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
                saved_model=saved_model, image_shape=image_shape)
 
     if fold_validate:
-        if model_name = 'lstm':
+        if model_name == 'lstm':
             X, y = data.load_extracted_data(split=False) 
         else:
             X,y = data.load_sequence_data(split=False)
-            
+
         kf = KFold(n_splits=10)
         tn, fp, fn, tp = 0, 0, 0, 0
 
