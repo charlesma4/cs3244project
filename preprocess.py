@@ -33,9 +33,6 @@ def preprocess_csv_data(num_frames):
             y.append(1)
         X[curr_index].append(row.tolist()[3:])
     
-    # Reset indexing
-    curr_sequence, curr_index = None, -1
-
     # Then read adl data
     df = pd.read_csv(raw_data_adls)
     for _, row in df.iterrows():
@@ -43,11 +40,12 @@ def preprocess_csv_data(num_frames):
             curr_sequence = row['name']
             curr_index += 1
             X.append([])
-            y.append(1)
+            y.append(0)
         X[curr_index].append(row.tolist()[3:])
 
     # Rescale each sequence into num_frames
     for i in range(len(X)):
+        print(X[i])
         X[i] = rescale_list(X[i], num_frames)
     
     # sanity check
