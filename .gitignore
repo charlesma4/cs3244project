@@ -6,5 +6,5 @@ __pycache__
 *avi
 *swp
 data/logs/*
-data/checkpoints/*
+data/trained/*
 data/sequences/*
