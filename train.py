@@ -64,7 +64,7 @@ def main():
     if len(sys.argv) > 1:
         num_frames = int(sys.argv[1])
     else:
-        num_frames = 100
+        num_frames = 120
     num_features = 4
 
     train(model_name, num_frames=num_frames, saved_model=saved_model, image_shape=image_shape, \
