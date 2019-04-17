@@ -11,7 +11,7 @@ from keras.layers.convolutional import (Conv2D, MaxPooling3D, Conv3D,
 
 
 class Model:
-    def __init__(self, nb_classes, model, dropout=0.2, num_frames=48, saved_model=None, features_length=8):
+    def __init__(self, nb_classes, model, dropout=0.2, num_frames=40, saved_model=None, features_length=8):
 
         # Set defaults.
         self.num_frames = num_frames
