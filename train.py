@@ -108,14 +108,13 @@ def main():
     save_trained_model = True
     batch_size = 10
     nb_epoch = 100
+    num_frames = 120
     image_shape = (160, 120)
     fold_validate = False
+    num_features = 4
 
     if len(sys.argv) > 1:
-        num_frames = int(sys.argv[1])
-    else:
-        num_frames = 120
-    num_features = 4
+        model_name = sys.argv[1]
 
     train(model_name, num_frames=num_frames, saved_model=saved_model, image_shape=image_shape, fold_validate=fold_validate,
           batch_size=batch_size, nb_epoch=nb_epoch, num_features=num_features, save_trained_model=save_trained_model)
