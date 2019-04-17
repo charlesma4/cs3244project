@@ -28,8 +28,7 @@ class Data:
             label = self.classes[seq.split('-')[0]]
             frames = get_frames(os.path.join(data_path, seq))
             frames = rescale_list(frames, self.num_frames, images=True)
-            print(frames)
-            sequence = self.build_sequence(self.num_frames)
+            sequence = self.build_sequence(frames)
 
             X.append(sequence)
             y.append(label)
