@@ -33,10 +33,7 @@ class Model:
             self.model = self.lrcn()
 
         # Now compile the network.
-        optimizer = Adam(lr=1e-5, decay=1e-6)
-        self.model.compile(loss='binary_crossentropy', optimizer=optimizer,
-                           metrics=['accuracy'])
-
+        self.model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
         print(self.model.summary())
 
     def lstm(self):
@@ -44,6 +41,7 @@ class Model:
         model.add(LSTM(self.input_shape[1], return_sequences=False,
                        input_shape=self.input_shape,
                        dropout=self.dropout))
+        model.add(Dense(4, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
 
         return model
