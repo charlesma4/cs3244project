@@ -11,7 +11,7 @@ from keras.layers.convolutional import (Conv2D, MaxPooling3D, Conv3D,
 
 
 class Model:
-    def __init__(self, model_name, num_frames=48, saved_model=None,dropout=0.2, features_length=8):
+    def __init__(self, model_name, num_frames=48, num_features=4, saved_model=None,dropout=0.2):
 
         # Set defaults.
         self.num_frames = num_frames
@@ -25,7 +25,7 @@ class Model:
             self.model = load_model(self.saved_model)
         elif model_name == 'lstm':
             print("Loading LSTM model.")
-            self.input_shape = (num_frames, features_length)
+            self.input_shape = (num_frames, num_features)
             self.model = self.lstm()
         elif model_name == 'lrcn':
             print("Loading LRCN model.")

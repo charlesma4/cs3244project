@@ -5,7 +5,7 @@ from keras.callbacks import TensorBoard, ModelCheckpoint, EarlyStopping, CSVLogg
 from model import Model
 from data import Data
 
-def train(model_name, num_frames=48, saved_model=None,
+def train(model_name, num_frames=48, num_features=4, saved_model=None,
           class_limit=None, image_shape=None, num_samples=70,
           load_to_memory=False, batch_size=32, nb_epoch=100):
     
@@ -53,9 +53,10 @@ def main():
     nb_epoch = 1000
     image_shape = (80, 80, 3)
     num_frames = 48
+    num_features = 4
 
     train(model_name, num_frames=num_frames, saved_model=saved_model, image_shape=image_shape, \
-        batch_size=batch_size, nb_epoch=nb_epoch)
+        batch_size=batch_size, nb_epoch=nb_epoch, num_features=num_features)
 
 if __name__ == '__main__':
     main()
