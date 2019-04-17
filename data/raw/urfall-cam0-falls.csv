@@ -1,4 +1,4 @@
-Sequence Name,Frame #,Label,HWRatio,MMRatio,BoundingBoxO,MaxStdXZ,HHMaxRatio,Actual Height,Distance of Person to Floor,P40
+name,frame,label,hwr,mmr,bbo,msxz,hhmr,height,dist,p40
 fall-01,1,-1,3.1667,2.9098,0.55367,126.0258,1.0324,1899.5366,1055.9988,0.04731
 fall-01,2,-1,3.3067,2.9699,0.47876,125.5657,1.1251,2070.1193,1065.9506,0.048175
 fall-01,3,-1,3.1408,3.0506,0.54374,123.157,1.0161,1869.6442,1055.4955,0.05018
