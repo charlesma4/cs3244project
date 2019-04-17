@@ -49,7 +49,6 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
     print('Test Accuracy: {}\nTest Loss: {}'.format(test_acc, test_loss))
 
     y_pred = rm.model.predict(X_test)
-    print(y_pred)
     y_pred = (y_pred > 0.5)
 
     # tn, fp, fn, tp
