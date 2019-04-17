@@ -1,10 +1,15 @@
 import os
+import sys
 import glob
 from keras import backend as K
 
 def rescale_list(input_list, size):
     # First ensure that the input_list is greater than the given size.
-    assert len(input_list) > size, 'length {} is less than size {}'.format(len(input_list), size)
+    try:
+        assert len(input_list) > size
+    except AssertionError:
+        print('length {} is less than size {}'.format(len(input_list), size))
+        sys.exit()
 
     # Skip frames to get to correct length
     skip = len(input_list) // size
