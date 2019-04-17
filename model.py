@@ -39,8 +39,7 @@ class Model:
     def lstm(self):
         model = Sequential()
         model.add(LSTM(self.input_shape[1], return_sequences=False,
-                       input_shape=self.input_shape,
-                       dropout=self.dropout))
+                       input_shape=self.input_shape))
         model.add(Dense(4, activation='relu'))
         model.add(Dense(1, activation='sigmoid'))
 
