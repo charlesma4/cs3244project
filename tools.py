@@ -23,7 +23,9 @@ def rescale_list(input_list, size, images=False):
     return output[:size]
 
 def get_frames(path):
+    print(os.path.join(path, '*jpg'))
     images = sorted(glob.glob(os.path.join(path, '*jpg')))
+    print(images)
     return images
 
 # Custom F1 metric @Paddy and @Kev1n91 on StackOverflow
