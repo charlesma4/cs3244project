@@ -109,7 +109,7 @@ def main():
     batch_size = 10
     nb_epoch = 100
     image_shape = (80, 80, 3)
-    fold_validate = True
+    fold_validate = False
 
     if len(sys.argv) > 1:
         num_frames = int(sys.argv[1])
