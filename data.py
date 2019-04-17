@@ -33,7 +33,7 @@ class Data:
             y.append(label)
 
         X = np.array(X)
-        y = np.array(y)
+        y = np.array(y).reshape(-1, 1)
         return train_test_split(X, y, test_size=0.3, random_state=1998)
     
     def load_extracted_data(self):
@@ -41,7 +41,7 @@ class Data:
         if not os.path.isfile(os.path.join(data_folder, 'data.npy')):
             preprocess_csv_data(self.num_frames)
         X = np.load(os.path.join(data_folder, 'data.npy'))
-        y = np.load(os.path.join(data_folder, 'labels.npy'))
+        y = np.load(os.path.join(data_folder, 'labels.npy')).reshape(-1, 1)
         return train_test_split(X, y, test_size=0.3, random_state=1998)
 
     def build_sequence(self, frames):
