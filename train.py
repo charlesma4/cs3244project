@@ -8,7 +8,7 @@ from data import Data
 
 def train(model_name, num_frames=48, num_features=4, saved_model=None,
           class_limit=None, image_shape=None, num_samples=70,
-          load_to_memory=False, batch_size=1, nb_epoch=100):
+          load_to_memory=False, batch_size=1, nb_epoch=100, drop_out=0.3):
     
     # Helper: TensorBoard
     tb = TensorBoard(log_dir=os.path.join('data', 'logs', model_name))
@@ -59,9 +59,9 @@ def main():
     model_name = 'lstm'
     saved_model = None  # None or weights file
     batch_size = 10
-    nb_epoch = 1000
+    nb_epoch = 100
     image_shape = (80, 80, 3)
-    num_frames = 48
+    num_frames = 100
     num_features = 4
 
     train(model_name, num_frames=num_frames, saved_model=saved_model, image_shape=image_shape, \

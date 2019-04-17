@@ -1,6 +1,6 @@
-# cs3244project
+# FallNet
 Classifying elderly falls with a CNN -> RNN (LRCN model) using depth video data.
 
 ## Setup
 1. `pip install -r requirements.txt`
-2. `cat data/data_urls.txt | parallel --gnu "wget -P data/sequences/ {}"`
+2. `wget -P data/sequences/ -i data/data_urls.txt`

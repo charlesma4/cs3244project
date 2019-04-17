@@ -4,16 +4,18 @@ import glob
 from keras import backend as K
 
 def rescale_list(input_list, size):
-    # First ensure that the input_list is greater than the given size.
-    try:
-        assert len(input_list) > size
-    except AssertionError:
-        print('length {} is less than size {}'.format(len(input_list), size))
+    # Either scale list down if input length is less than size or pad with 0s.
+    if not input_list:
+        print('Input list is empty.')
         sys.exit()
 
-    # Skip frames to get to correct length
-    skip = len(input_list) // size
-    output = [input_list[i] for i in range(0, len(input_list), skip)]
+    if len(input_list) > size:
+        # Skip frames to get to correct length
+        skip = len(input_list) // size
+        output = [input_list[i] for i in range(0, len(input_list), skip)]
+    else:
+        for _ in range(len(input_list), size):
+            input_list.append([0 for val in range(len(input_list[0]))])
     return output[:size]
 
 def get_frames(path):
