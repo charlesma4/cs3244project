@@ -103,7 +103,7 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
 
 
 def main():
-    model_name = 'lstm'
+    model_name = 'lcrn'
     saved_model = None  # None or weights file
     save_trained_model = True
     batch_size = 10
