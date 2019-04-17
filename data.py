@@ -21,7 +21,6 @@ class Data:
 
         data_path = os.path.join('data', 'sequences')
         sequences = os.listdir(data_path)
-        print(sequences)
 
         X, y = [], []
         for seq in sequences:
