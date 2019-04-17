@@ -6,7 +6,7 @@ from keras import backend as K
 def rescale_list(input_list, size, images=False):
     # Either scale list down if input length is less than size or pad with 0s.
     if not input_list:
-        print('Input list is empty.')
+        print('tools.py, rescale_list: Input list is empty.')
         sys.exit()
 
     if len(input_list) > size:
@@ -23,9 +23,7 @@ def rescale_list(input_list, size, images=False):
     return output[:size]
 
 def get_frames(path):
-    print(os.path.join(path, '*jpg'))
-    images = sorted(glob.glob(os.path.join(path, '*jpg')))
-    print(images)
+    images = sorted(glob.glob(os.path.join(path, '*png')))
     return images
 
 # Custom F1 metric @Paddy and @Kev1n91 on StackOverflow
