@@ -58,7 +58,7 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
 
     if save_trained_model:
         save_model_name = 'model-{}-{}.h5'.format(model_name, test_acc)
-        if not os.path.isdir('data', 'trained'):
+        if not os.path.isdir( os.path.join('data', 'trained')):
             pathlib.Path(os.path.join('data', 'trained')).mkdir(parents=True, exist_ok=True)
         if not os.path.isfile(os.path.join('data', 'trained', save_model_name)):
             rm.model.save(os.path.join('data','trained', save_model_name))
@@ -68,7 +68,7 @@ def main():
     saved_model = None  # None or weights file
     save_trained_model = True
     batch_size = 10
-    nb_epoch = 100
+    nb_epoch = 200
     image_shape = (80, 80, 3)
     if len(sys.argv) > 1:
         num_frames = int(sys.argv[1])
