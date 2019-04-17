@@ -61,6 +61,7 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
             y_pred = (y_pred > 0.5)
 
             # tn, fp, fn, tp
+            print(confusion_matrix(y[test], y_pred).ravel())
             tn1,fp1,fn1,tp1 = confusion_matrix(y[test], y_pred).ravel()
             tn += tn1
             fp += fp1
