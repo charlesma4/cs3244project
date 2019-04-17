@@ -45,7 +45,6 @@ def preprocess_csv_data(num_frames):
 
     # Rescale each sequence into num_frames
     for i in range(len(X)):
-        print(X[i])
         X[i] = rescale_list(X[i], num_frames)
     
     # sanity check

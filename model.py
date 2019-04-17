@@ -11,24 +11,23 @@ from keras.layers.convolutional import (Conv2D, MaxPooling3D, Conv3D,
 
 
 class Model:
-    def __init__(self, nb_classes, model, dropout=0.2, num_frames=40, saved_model=None, features_length=8):
+    def __init__(self, model_name, dropout=0.2, num_frames=48, saved_model=None, features_length=8):
 
         # Set defaults.
         self.num_frames = num_frames
         self.load_model = load_model
         self.saved_model = saved_model
-        self.nb_classes = nb_classes
         self.feature_queue = deque()
         self.dropout = dropout
 
         if self.saved_model is not None:
             print("Loading model %s" % self.saved_model)
             self.model = load_model(self.saved_model)
-        elif model == 'lstm':
+        elif model_name == 'lstm':
             print("Loading LSTM model.")
             self.input_shape = (num_frames, features_length)
             self.model = self.lstm()
-        elif model == 'lrcn':
+        elif model_name == 'lrcn':
             print("Loading LRCN model.")
             self.input_shape = (num_frames, 80, 80, 3)
             self.model = self.lrcn()
@@ -45,7 +44,7 @@ class Model:
         model.add(LSTM(self.input_shape[1], return_sequences=False,
                        input_shape=self.input_shape,
                        dropout=self.dropout))
-        model.add(Dense(self.nb_classes, activation='softmax'))
+        model.add(Dense(1, activation='sigmoid'))
 
         return model
 
@@ -95,6 +94,6 @@ class Model:
 
         model.add(Dropout(0.5))
         model.add(LSTM(256, return_sequences=False, dropout=0.5))
-        model.add(Dense(self.nb_classes, activation='softmax'))
+        model.add(Dense(1, activation='sigmoid'))
 
         return model
