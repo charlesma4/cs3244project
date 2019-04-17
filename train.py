@@ -2,6 +2,7 @@ import time
 import os.path
 
 from keras.callbacks import TensorBoard, ModelCheckpoint, EarlyStopping, CSVLogger
+from sklearn.metrics import confusion_matrix
 from model import Model
 from data import Data
 
@@ -45,6 +46,13 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
     
     test_loss, test_acc = rm.model.evaluate(X_test, y_test)
     print('Test Accuracy: {}\nTest Loss: {}'.format(test_acc, test_loss))
+
+    y_pred = rm.model.predict(X_test)
+    y_pred = (y_pred > 0.5)
+
+    # tn, fp, fn, tp
+    cm = confusion_matrix(y_test, y_pred)
+    print(cm)
 
 def main():
     model_name = 'lstm'
