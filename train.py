@@ -43,29 +43,30 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
 
         kf = KFold(n_splits=10)
         tn, fp, fn, tp = 0, 0, 0, 0
-
+        count = 1
         for train, test in kf.split(X, y):
             rm.model.fit(
-                X_train,
-                y_train,
+                X[train],
+                y[train],
                 batch_size=batch_size,
-                validation_data=(X_test, y_test),
+                validation_data=(X[test], y[test]),
                 verbose=0,
                 callbacks=[tb, early_stopper, csv_logger],
                 epochs=nb_epoch)
 
-            test_loss, test_acc = rm.model.evaluate(X_test, y_test)
-            print('Fold Test Accuracy: {}\nFold Test Loss: {}\n'.format(test_acc, test_loss))
+            test_loss, test_acc = rm.model.evaluate(X[test], y[test])
+            print('Fold {}\n---- Test Accuracy: {}\n---- Test Loss: {}\n'.format(count, test_acc, test_loss))
 
-            y_pred = rm.model.predict(X_test)
+            y_pred = rm.model.predict(X[test])
             y_pred = (y_pred > 0.5)
 
             # tn, fp, fn, tp
-            tn1,fp1,fn1,tp1 = confusion_matrix(y_test, y_pred)
+            tn1,fp1,fn1,tp1 = confusion_matrix(y[test], y_pred)
             tn += tn1
             fp += fp1
             fn += fn1
             tp += tp1
+            count+=1
         print('tn: {}, fp: {}, fn: {}, tp: {}'.format(tn, fp, fn, tp))
     else:
         if model_name == 'lstm':
@@ -108,7 +109,7 @@ def main():
     nb_epoch = 200
     image_shape = (80, 80, 3)
     fold_validate = True
-    
+
     if len(sys.argv) > 1:
         num_frames = int(sys.argv[1])
     else:
