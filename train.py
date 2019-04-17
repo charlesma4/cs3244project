@@ -31,6 +31,8 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
     elif model_name == 'lrcn':
         X_train, X_test, y_train, y_test = data.load_sequence_data()
 
+    print(y_train)
+    return
     # Get the model.
     rm = Model(model_name, num_frames=num_frames, saved_model=saved_model)
 
