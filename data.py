@@ -16,7 +16,7 @@ class Data:
             'adl': 0
         }
     
-    def load_sequence_data(self):
+    def load_sequence_data(self, split=True):
         # Loads into memory all of the sequence data
 
         data_path = os.path.join('data', 'sequences')
@@ -34,9 +34,13 @@ class Data:
 
         X = np.array(X)
         y = np.array(y).reshape(-1, 1)
-        return train_test_split(X, y, test_size=0.3, random_state=1998)
+        
+        if split:
+            return train_test_split(X, y, test_size=0.3, random_state=1998)
+        else:
+            return X, y
     
-    def load_extracted_data(self):
+    def load_extracted_data(self, split=True):
         data_folder = os.path.join('data', 'extracted')
         if not os.path.isfile(os.path.join(data_folder, 'data.npy')):
             preprocess_csv_data(self.num_frames)
@@ -45,7 +49,11 @@ class Data:
             preprocess_csv_data(self.num_frames)
             X = np.load(os.path.join(data_folder, 'data.npy'))
         y = np.load(os.path.join(data_folder, 'labels.npy')).reshape(-1, 1)
-        return train_test_split(X, y, test_size=0.3, random_state=1998)
+
+        if split:
+            return train_test_split(X, y, test_size=0.3, random_state=1998)
+        else:
+            return X, y
 
     def build_sequence(self, frames):
         """Given a set of frames (filenames), build our sequence."""
