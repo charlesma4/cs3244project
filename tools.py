@@ -16,7 +16,7 @@ def rescale_list(input_list, size, images=False):
     else:
         output = input_list
         for _ in range(len(input_list), size):
-            if images:
+            if not images:
                 output.append([0 for __ in range(len(input_list[0]))])
             else:
                 output.append(os.path.join('data', 'black.png'))
