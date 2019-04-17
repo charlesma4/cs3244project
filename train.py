@@ -108,7 +108,7 @@ def main():
     save_trained_model = True
     batch_size = 10
     nb_epoch = 100
-    image_shape = (80, 80, 3)
+    image_shape = (160, 120)
     fold_validate = False
 
     if len(sys.argv) > 1:

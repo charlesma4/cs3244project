@@ -9,7 +9,7 @@ from tools import rescale_list, get_frames
 from sklearn.model_selection import train_test_split
 
 class Data:
-    def __init__(self, num_frames=48, image_shape=(224, 224, 3)):
+    def __init__(self, num_frames=48, image_shape=(160, 120)):
         self.num_frames = num_frames
         self.classes = {
             'fall': 1,

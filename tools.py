@@ -3,7 +3,7 @@ import sys
 import glob
 from keras import backend as K
 
-def rescale_list(input_list, size):
+def rescale_list(input_list, size, images=False):
     # Either scale list down if input length is less than size or pad with 0s.
     if not input_list:
         print('Input list is empty.')
@@ -16,7 +16,10 @@ def rescale_list(input_list, size):
     else:
         output = input_list
         for _ in range(len(input_list), size):
-            output.append([0 for __ in range(len(input_list[0]))])
+            if images:
+                output.append([0 for __ in range(len(input_list[0]))])
+            else:
+                output.append(os.path.join('data', 'black.png'))
     return output[:size]
 
 def get_frames(path):
