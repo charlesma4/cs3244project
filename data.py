@@ -21,6 +21,7 @@ class Data:
 
         data_path = os.path.join('data', 'sequences')
         sequences = os.listdir(data_path)
+        print(sequences)
 
         X, y = [], []
         for seq in sequences:
@@ -34,6 +35,8 @@ class Data:
 
         X = np.array(X)
         y = np.array(y).reshape(-1, 1)
+
+        print('---- X shape: {}\n---- y shape: {}'.format(X.shape, y.shape))
         
         if split:
             return train_test_split(X, y, test_size=0.3, random_state=1998)
@@ -44,11 +47,16 @@ class Data:
         data_folder = os.path.join('data', 'extracted')
         if not os.path.isfile(os.path.join(data_folder, 'data.npy')):
             preprocess_csv_data(self.num_frames)
+        
         X = np.load(os.path.join(data_folder, 'data.npy'))
+        
+        # If new input shape does not match the cached one, resave...
         if X.shape[1] != self.num_frames:
             preprocess_csv_data(self.num_frames)
             X = np.load(os.path.join(data_folder, 'data.npy'))
+
         y = np.load(os.path.join(data_folder, 'labels.npy')).reshape(-1, 1)
+        print('---- X shape: {}\n---- y shape: {}'.format(X.shape, y.shape))
 
         if split:
             return train_test_split(X, y, test_size=0.3, random_state=1998)
