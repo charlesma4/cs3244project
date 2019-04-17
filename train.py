@@ -106,7 +106,7 @@ def main():
     saved_model = None  # None or weights file
     save_trained_model = True
     batch_size = 10
-    nb_epoch = 200
+    nb_epoch = 100
     image_shape = (80, 80, 3)
     fold_validate = True
 
