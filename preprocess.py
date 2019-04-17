@@ -1,4 +1,5 @@
 import os
+import pathlib
 import pandas as pd
 import numpy as np
 from tools import rescale_list
@@ -56,5 +57,6 @@ def preprocess_csv_data(num_frames):
     print('---- Feature shape: {}\n---- Label shape: {}'.format(X.shape, y.shape))
     
     data_folder = os.path.join('data', 'extracted')
+    pathlib.Path(data_folder).mkdir(parents=True, exist_ok=True)
     np.save(os.path.join(data_folder, 'data'), X)
     np.save(os.path.join(data_folder, 'labels'), y)
