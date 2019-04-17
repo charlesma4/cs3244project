@@ -57,7 +57,7 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
 def main():
     model_name = 'lstm'
     saved_model = None  # None or weights file
-    batch_size = 1
+    batch_size = 10
     nb_epoch = 1000
     image_shape = (80, 80, 3)
     num_frames = 48
