@@ -1,5 +1,6 @@
 import time
 import os.path
+import sys
 
 from keras.callbacks import TensorBoard, ModelCheckpoint, EarlyStopping, CSVLogger
 from sklearn.metrics import confusion_matrix
@@ -61,7 +62,10 @@ def main():
     batch_size = 10
     nb_epoch = 100
     image_shape = (80, 80, 3)
-    num_frames = 100
+    if len(sys.argv) > 1:
+        num_frames = int(sys.argv[1])
+    else:
+        num_frames = 100
     num_features = 4
 
     train(model_name, num_frames=num_frames, saved_model=saved_model, image_shape=image_shape, \
