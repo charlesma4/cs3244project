@@ -93,13 +93,13 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
         cm = confusion_matrix(y_test, y_pred)
         print(cm)
 
-    if save_trained_model:
-        save_model_name = 'model-{}-{}.h5'.format(model_name, test_acc)
-        if not os.path.isdir(os.path.join('data', 'trained')):
-            pathlib.Path(os.path.join('data', 'trained')).mkdir(
-                parents=True, exist_ok=True)
-        if not os.path.isfile(os.path.join('data', 'trained', save_model_name)):
-            rm.model.save(os.path.join('data', 'trained', save_model_name))
+        if save_trained_model:
+            save_model_name = 'model-{}-{}.h5'.format(model_name, test_acc)
+            if not os.path.isdir(os.path.join('data', 'trained')):
+                pathlib.Path(os.path.join('data', 'trained')).mkdir(
+                    parents=True, exist_ok=True)
+            if not os.path.isfile(os.path.join('data', 'trained', save_model_name)):
+                rm.model.save(os.path.join('data', 'trained', save_model_name))
 
 
 def main():
