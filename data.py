@@ -27,7 +27,7 @@ class Data:
             print('Extracting sequence {}'.format(seq))
             label = self.classes[seq.split('-')[0]]
             frames = get_frames(os.path.join(data_path, seq))
-            frames = rescale_list(frames, self.num_frames)
+            frames = rescale_list(frames, self.num_frames, images=True)
             sequence = self.build_sequence(self.num_frames)
 
             X.append(sequence)
