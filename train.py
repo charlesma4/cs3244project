@@ -37,9 +37,9 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
 
     if fold_validate:
         if model_name == 'lstm':
-            X, y = data.load_extracted_data(split=False) 
+            X, y = data.load_extracted_data(split=False)
         else:
-            X,y = data.load_sequence_data(split=False)
+            X, y = data.load_sequence_data(split=False)
 
         kf = KFold(n_splits=10)
         tn, fp, fn, tp = 0, 0, 0, 0
@@ -59,16 +59,15 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
 
             y_pred = rm.model.predict(X[test])
             y_pred = (y_pred > 0.5)
-            
+
             # tn, fp, fn, tp
-            print('fold cm: {}'.format(confusion_matrix(y[test], y_pred).ravel()))
-            tn1,fp1,fn1,tp1 = confusion_matrix(y[test], y_pred).ravel()
+            tn1, fp1, fn1, tp1 = confusion_matrix(y[test], y_pred, labels=[0, 1]).ravel()
 
             tn += tn1
             fp += fp1
             fn += fn1
             tp += tp1
-            count+=1
+            count += 1
         print('tn: {}, fp: {}, fn: {}, tp: {}'.format(tn, fp, fn, tp))
     else:
         if model_name == 'lstm':
