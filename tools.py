@@ -16,7 +16,7 @@ def rescale_list(input_list, size):
     else:
         output = input_list
         for _ in range(len(input_list), size):
-            output.append(0)
+            output.append([0 for val in range(len(input_list[0]))])
     return output[:size]
 
 def get_frames(path):
