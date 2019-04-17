@@ -35,7 +35,7 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
         X_train, X_test, y_train, y_test = data.load_sequence_data()
 
     # Get the model.
-    rm = Model(model_name, num_frames=num_frames, saved_model=saved_model)
+    rm = Model(model_name, num_frames=num_frames, saved_model=saved_model, image_shape=image_shape)
 
     rm.model.fit(
         X_train,

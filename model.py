@@ -11,7 +11,7 @@ from keras.layers.convolutional import (Conv2D, MaxPooling3D, Conv3D,
 
 
 class Model:
-    def __init__(self, model_name, num_frames=48, num_features=4, saved_model=None,dropout=0.2):
+    def __init__(self, model_name, num_frames=48, num_features=4, saved_model=None, dropout=0.2, image_shape=None):
 
         # Set defaults.
         self.num_frames = num_frames
@@ -24,12 +24,12 @@ class Model:
             print("Loading model %s" % self.saved_model)
             self.model = load_model(self.saved_model)
         elif model_name == 'lstm':
-            print("Loading LSTM model.")
+            print("Loading LSTM model...")
             self.input_shape = (num_frames, num_features)
             self.model = self.lstm()
         elif model_name == 'lrcn':
-            print("Loading LRCN model.")
-            self.input_shape = (num_frames, 80, 80, 3)
+            print("Loading LRCN model...")
+            self.input_shape = (num_frames, image_shape[0], image_shape[1], image_shape[2])
             self.model = self.lrcn()
 
         # Now compile the network.
@@ -39,7 +39,7 @@ class Model:
     def lstm(self):
         model = Sequential()
         model.add(LSTM(self.input_shape[1], return_sequences=False,
-                       input_shape=self.input_shape))
+                       input_shape=self.input_shape, dropout=self.dropout))
         model.add(Dense(1, activation='sigmoid'))
 
         return model
