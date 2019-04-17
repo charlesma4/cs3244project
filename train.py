@@ -27,9 +27,9 @@ def train(model_name, num_frames=48, saved_model=None,
     # steps_per_epoch = (num_samples * 0.7) // batch_size
 
     if model_name == 'lstm':
-        X_train, y_train, X_test, y_test = data.load_extracted_data()
+        X_train, X_test, y_train, y_test = data.load_extracted_data()
     elif model_name == 'lrcn':
-        X_train, y_train, X_test, y_test = data.load_sequence_data()
+        X_train, X_test, y_train, y_test = data.load_sequence_data()
 
     # Get the model.
     rm = Model(model_name, num_frames, saved_model)
