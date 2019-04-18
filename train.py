@@ -2,6 +2,7 @@ import time
 import os.path
 import sys
 import pathlib
+import numpy as np
 
 from keras.callbacks import TensorBoard, ModelCheckpoint, EarlyStopping, CSVLogger
 from sklearn.metrics import confusion_matrix
@@ -28,10 +29,6 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
     # Get the data and process it.
     data = Data(num_frames=num_frames, image_shape=image_shape)
 
-    # Multiply by 0.7 to attempt to guess how much of data.data is the train set.
-    # steps_per_epoch = (num_samples * 0.7) // batch_size
-
-    # Get the model.
     rm = Model(model_name, num_frames=num_frames,
                saved_model=saved_model, image_shape=image_shape)
 
@@ -55,13 +52,15 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
                 epochs=nb_epoch)
 
             test_loss, test_acc = rm.model.evaluate(X[test], y[test])
-            print('Fold {}\n---- Test Accuracy: {}\n---- Test Loss: {}\n'.format(count, test_acc, test_loss))
+            print(
+                'Fold {}\n---- Test Accuracy: {}\n---- Test Loss: {}\n'.format(count, test_acc, test_loss))
 
             y_pred = rm.model.predict(X[test])
             y_pred = (y_pred > 0.5)
 
             # tn, fp, fn, tp
-            tn1, fp1, fn1, tp1 = confusion_matrix(y[test], y_pred, labels=[0, 1]).ravel()
+            tn1, fp1, fn1, tp1 = confusion_matrix(
+                y[test], y_pred, labels=[0, 1]).ravel()
 
             tn += tn1
             fp += fp1
@@ -72,34 +71,56 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
     else:
         if model_name == 'lstm':
             X_train, X_test, y_train, y_test = data.load_extracted_data()
+            rm.model.fit(
+                X_train,
+                y_train,
+                batch_size=batch_size,
+                validation_data=(X_test, y_test),
+                verbose=1,
+                callbacks=[tb, early_stopper, csv_logger],
+                epochs=nb_epoch)
+
+            test_loss, test_acc = rm.model.evaluate(X_test, y_test)
+            print('Test Accuracy: {}\nTest Loss: {}'.format(test_acc, test_loss))
+
+            y_pred = rm.model.predict(X_test)
+            y_pred = (y_pred > 0.5)
+
+            # tn, fp, fn, tp
+            cm = confusion_matrix(y_test, y_pred)
+            print(cm)
+
+            if save_trained_model:
+                save_model_name = 'model-{}-{}.h5'.format(model_name, test_acc)
+                if not os.path.isdir(os.path.join('data', 'trained')):
+                    pathlib.Path(os.path.join('data', 'trained')).mkdir(
+                        parents=True, exist_ok=True)
+                if not os.path.isfile(os.path.join('data', 'trained', save_model_name)):
+                    rm.model.save(os.path.join('data', 'trained', save_model_name))
         elif model_name == 'lrcn':
-            X_train, X_test, y_train, y_test = data.load_sequence_data()
-        rm.model.fit(
-            X_train,
-            y_train,
-            batch_size=batch_size,
-            validation_data=(X_test, y_test),
+            data.load_image_train_split()
+            steps_per_epoch = (data.num_samples * 0.7) // batch_size
+            validation_steps = (data.num_samples * 0.3) // batch_size
+
+            generator = data.frame_generator(batch_size, 'train')
+            val_generator = data.frame_generator(1, 'test')
+
+            rm.model.fit_generator(
+            generator=generator,
+            steps_per_epoch=steps_per_epoch,
+            epochs=nb_epoch,
             verbose=1,
             callbacks=[tb, early_stopper, csv_logger],
-            epochs=nb_epoch)
+            validation_data=val_generator,
+            validation_steps=validation_steps,
+            workers=4)
 
-        test_loss, test_acc = rm.model.evaluate(X_test, y_test)
-        print('Test Accuracy: {}\nTest Loss: {}'.format(test_acc, test_loss))
+            test_generator = data.frame_generator(1, 'test')
 
-        y_pred = rm.model.predict(X_test)
-        y_pred = (y_pred > 0.5)
+            # tn, fp, fn, tp
+            cm = confusion_matrix(np.concatenate([sample[1][0] for sample in test_generator]), np.around(rm.model.predict_generator(test_generator, steps=(data.num_samples*0.3))))
+            print(cm)
 
-        # tn, fp, fn, tp
-        cm = confusion_matrix(y_test, y_pred)
-        print(cm)
-
-        if save_trained_model:
-            save_model_name = 'model-{}-{}.h5'.format(model_name, test_acc)
-            if not os.path.isdir(os.path.join('data', 'trained')):
-                pathlib.Path(os.path.join('data', 'trained')).mkdir(
-                    parents=True, exist_ok=True)
-            if not os.path.isfile(os.path.join('data', 'trained', save_model_name)):
-                rm.model.save(os.path.join('data', 'trained', save_model_name))
 
 
 def main():
