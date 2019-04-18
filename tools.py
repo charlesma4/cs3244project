@@ -5,7 +5,7 @@ from keras import backend as K
 
 def rescale_list(input_list, size, images=False):
     # Either scale list down if input length is less than size or pad with 0s.
-    if not input_list:
+    if len(input_list) == 0:
         print('tools.py, rescale_list: Input list is empty.')
         sys.exit()
 
