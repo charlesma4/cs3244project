@@ -29,7 +29,7 @@ class Model:
             self.model = self.lstm()
         elif model_name == 'lrcn':
             print("Loading LRCN model...")
-            self.input_shape = (num_frames, image_shape[0], image_shape[1], 1)
+            self.input_shape = (num_frames, image_shape[0], image_shape[1], image_shape[2])
             self.model = self.lrcn()
 
         # Now compile the network.

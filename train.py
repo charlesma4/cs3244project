@@ -109,7 +109,7 @@ def main():
     batch_size = 10
     nb_epoch = 100
     num_frames = 120
-    image_shape = (160, 120)
+    image_shape = (160, 120, 3)
     fold_validate = False
     num_features = 4
 
