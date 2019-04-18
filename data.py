@@ -133,8 +133,7 @@ class Data:
                 # print(sample)
 
                 label = self.classes[sample[0].split('/')[2].split('-')[0]]
-                frames = get_frames(os.path.join(data_path, sample))
-                frames = rescale_list(frames, self.num_frames, images=True)
+                frames = rescale_list(sample, self.num_frames, images=True)
                 sequence = self.build_sequence(frames)
 
                 X.append(sequence)
