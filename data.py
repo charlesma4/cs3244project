@@ -130,7 +130,7 @@ class Data:
 
                 # Get a random sample.
                 sample = random.choice(data)
-                print(sample)
+                # print(sample)
 
                 label = self.classes[sample[0].split('/')[2].split('-')[0]]
                 frames = get_frames(os.path.join(data_path, sample))
