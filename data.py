@@ -11,6 +11,7 @@ from sklearn.model_selection import train_test_split
 class Data:
     def __init__(self, num_frames=48, image_shape=(160, 120)):
         self.num_frames = num_frames
+        self.image_shape = image_shape
         self.classes = {
             'fall': 1,
             'adl': 0
