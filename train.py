@@ -145,8 +145,10 @@ def test(model_name, num_frames=48, num_features=4, saved_model=None, image_shap
     y_test = []
 
     for test_sample, label in test_generator:
-        y_pred += [np.around(rm.model.predict(test_sample))]
-        y_test += [label]
+        res = np.around(rm.model.predict(test_sample))
+        y_test.append(label)
+        y_pred.append(res)
+        print('true: {}, predict: {}'.format(label, res))
 
     # tn, fp, fn, tp
     tn,fp,fn,tp = confusion_matrix(y_test, y_pred, labels=[0, 1]).ravel()
