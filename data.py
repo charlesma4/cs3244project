@@ -70,7 +70,7 @@ class Data:
     def load_image_train_split(self):
         data_path = os.path.join('data', 'sequences')
         sequences = os.listdir(data_path)
-         print('Extracting sequences...')
+        print('Extracting sequences...')
 
         X, y = [], []
         for seq in sequences:
