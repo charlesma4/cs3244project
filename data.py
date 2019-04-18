@@ -122,7 +122,6 @@ class Data:
 
         while 1:
             X, y = [], []
-
             # Generate batch_size samples.
             for _ in range(batch_size):
                 # Reset to be safe.

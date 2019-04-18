@@ -85,7 +85,7 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
             y_pred = (y_pred > 0.5)
 
             # tn, fp, fn, tp
-            cm = confusion_matrix(y_test, y_pred)
+            cm = confusion_matrix(y_test, y_pred, labels=[0, 1])
             print(cm)
 
             if save_trained_model:
@@ -123,20 +123,34 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
 
             test_generator = data.frame_generator(batch_size, 'test')
 
+            y_pred = []
+            y_test = []
+
+            for test_sample, label in test_generator:
+                y_pred += [np.around(rm.model.predict(test_sample))]
+                y_test += [label]
+
             # tn, fp, fn, tp
-            cm = confusion_matrix([sample[1][0] for sample in test_generator], np.around(rm.model.predict_generator(test_generator, steps=validation_steps)))
-            print(cm)
+            tn.fp,fn,tp = confusion_matrix(y_test, y_pred, labels=[0, 1]).ravel()
+            print('tn: {}, fp: {}, fn: {}, tp: {}'.format(tn, fp, fn, tp))
 
 def test(model_name, num_frames=48, num_features=4, saved_model=None, image_shape=None, num_samples=70, save_trained_model=True, fold_validate=False,load_to_memory=False, batch_size=1, nb_epoch=100, drop_out=0.3):
     rm = Model(model_name, num_frames=num_frames, saved_model=saved_model, image_shape=image_shape)
     # Get the data and process it.
     data = Data(num_frames=num_frames, image_shape=image_shape)
     data.load_image_train_split()
-    validation_steps = (data.num_samples * 0.3) // batch_size
     test_generator = data.frame_generator(batch_size, 'test')
+
+    y_pred = []
+    y_test = []
+
+    for test_sample, label in test_generator:
+        y_pred += [np.around(rm.model.predict(test_sample))]
+        y_test += [label]
+
     # tn, fp, fn, tp
-    cm = confusion_matrix([sample[1][0] for sample in test_generator], np.around(rm.model.predict_generator(test_generator, steps=validation_steps)))
-    print(cm)
+    tn.fp,fn,tp = confusion_matrix(y_test, y_pred, labels=[0, 1]).ravel()
+    print('tn: {}, fp: {}, fn: {}, tp: {}'.format(tn, fp, fn, tp))
 
 def main():
     model_name = 'lrcn'
