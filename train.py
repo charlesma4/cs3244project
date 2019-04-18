@@ -124,7 +124,7 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
             test_generator = data.frame_generator(1, 'test')
 
             # tn, fp, fn, tp
-            cm = confusion_matrix(np.concatenate([sample[1][0] for sample in test_generator]), np.around(rm.model.predict_generator(test_generator, steps=(data.num_samples*0.3))))
+            cm = confusion_matrix([sample[1][0] for sample in test_generator], np.around(rm.model.predict_generator(test_generator, steps=(data.num_samples*0.3))))
             print(cm)
 
 
