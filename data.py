@@ -70,10 +70,10 @@ class Data:
     def load_image_train_split(self):
         data_path = os.path.join('data', 'sequences')
         sequences = os.listdir(data_path)
+         print('Extracting sequences...')
 
         X, y = [], []
         for seq in sequences:
-            print('Extracting sequence {}'.format(seq))
             label = self.classes[seq.split('-')[0]]
             frames = get_frames(os.path.join(data_path, seq))
             frames = rescale_list(frames, self.num_frames, images=True)
@@ -130,8 +130,9 @@ class Data:
 
                 # Get a random sample.
                 sample = random.choice(data)
+                print(sample)
 
-                label = self.classes[sample.split('-')[0]]
+                label = self.classes[sample[0].split('-')[0]]
                 frames = get_frames(os.path.join(data_path, sample))
                 frames = rescale_list(frames, self.num_frames, images=True)
                 sequence = self.build_sequence(frames)
