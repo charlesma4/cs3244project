@@ -65,4 +65,4 @@ class Data:
 
     def build_sequence(self, frames):
         """Given a set of frames (filenames), build our sequence."""
-        return [process_image(x, self.num_frames) for x in frames]
+        return [process_image(x, self.image_shape) for x in frames]

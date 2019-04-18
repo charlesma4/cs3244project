@@ -7,7 +7,7 @@ from keras.preprocessing.image import img_to_array, load_img
 
 def process_image(image, target_shape):
     # Load the image.
-    h, w, _ = target_shape
+    h, w = target_shape
     image = load_img(image, target_size=(h, w))
 
     # Turn it into numpy, normalize and return.
