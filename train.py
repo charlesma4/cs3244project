@@ -35,8 +35,6 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
     if fold_validate:
         if model_name == 'lstm':
             X, y = data.load_extracted_data(split=False)
-        else:
-            X, y = data.load_sequence_data(split=False)
 
         kf = KFold(n_splits=10)
         tn, fp, fn, tp = 0, 0, 0, 0
@@ -114,6 +112,14 @@ def train(model_name, num_frames=48, num_features=4, saved_model=None,
             validation_data=val_generator,
             validation_steps=validation_steps,
             workers=4)
+
+            if save_trained_model:
+                save_model_name = 'model-{}.h5'.format(model_name)
+                if not os.path.isdir(os.path.join('data', 'trained')):
+                    pathlib.Path(os.path.join('data', 'trained')).mkdir(
+                        parents=True, exist_ok=True)
+                if not os.path.isfile(os.path.join('data', 'trained', save_model_name)):
+                    rm.model.save(os.path.join('data', 'trained', save_model_name))
 
             test_generator = data.frame_generator(1, 'test')
 
